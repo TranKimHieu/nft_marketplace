@@ -20,6 +20,7 @@ import { Web3ReactProvider } from '@web3-react/core'
 import ETHBalance from './components/ETHBalance';
 import ETHBalanceSWR from './components/ETHBalanceSWR';
 import ReadERC20 from './components/ReadERC20';
+import NFTList from './components/NFTList';
 
 const useStyles = makeStyles({
     button_connect: {
@@ -61,7 +62,7 @@ const App = () => {
     }
 
     useEffect(() => {
-        console.log(chainId, account, active, library, connector)
+        // console.log(chainId, account, active, library, connector)
     })
 
     const classes = useStyles();
@@ -86,7 +87,10 @@ const App = () => {
                         <ETHBalanceSWR></ETHBalanceSWR>
                     </Grid>
                     <Grid item xs={12}>
-                        <ReadERC20 addressContract='0xb25cafd4b5FCBAE13Cb6d761dA4fdED3bA07008C'></ReadERC20>
+                        {/* <ReadERC20 addressContract='0xb25cafd4b5FCBAE13Cb6d761dA4fdED3bA07008C'></ReadERC20> */}
+                    </Grid>
+                    <Grid item xs={12}>
+                        <NFTList addressContract='0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE'></NFTList>
                     </Grid>
                 </Grid>
             </Container>
