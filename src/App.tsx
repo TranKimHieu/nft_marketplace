@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import Button from '@mui/material/Button'
@@ -6,21 +6,23 @@ import Container from '@mui/material/Container'
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper'
 
-import {styled} from '@mui/material/styles';
-import {makeStyles} from '@mui/styles';
+import { styled } from '@mui/material/styles';
+import { makeStyles } from '@mui/styles';
 
-import {formatAddress} from './utils/helpers';
-import {injected} from './utils/connectors';
+import { formatAddress } from './utils/helpers';
+import { injected } from './utils/connectors';
 
-import {Web3Provider} from '@ethersproject/providers'
-import {UserRejectedRequestError} from '@web3-react/injected-connector'
-import {useWeb3React} from '@web3-react/core'
+import { Web3Provider } from '@ethersproject/providers'
+import { UserRejectedRequestError } from '@web3-react/injected-connector'
+import { useWeb3React } from '@web3-react/core'
 
 import { Web3ReactProvider } from '@web3-react/core'
 import ETHBalance from './components/ETHBalance';
 import ETHBalanceSWR from './components/ETHBalanceSWR';
 import ReadERC20 from './components/ReadERC20';
 import NFTList from './components/NFTList';
+import config from './utils/config'
+import { uploadImage } from './api/apiNft';
 
 const useStyles = makeStyles({
     button_connect: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles({
     }
 });
 
-const Item = styled(Paper)(({theme}) => ({
+const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
     padding: theme.spacing(1),
@@ -44,7 +46,7 @@ const Item = styled(Paper)(({theme}) => ({
 }));
 
 const App = () => {
-    const {chainId, account, activate, deactivate, setError, active, library, connector} = useWeb3React<Web3Provider>()
+    const { chainId, account, activate, deactivate, setError, active, library, connector } = useWeb3React<Web3Provider>()
 
     const onClickConnect = () => {
         activate(injected, (error) => {
@@ -70,27 +72,24 @@ const App = () => {
     return (
         <div className="App">
             <Container className={classes.container} maxWidth="lg">
-                <Grid container spacing={2}>
-                    <Grid item xs={12}>
+                <Grid container spacing={1}>
+                    <Grid item xs={8}>
+                        <Button variant="contained" className={classes.button_connect}
+                            onClick={() => uploadImage({ file: 'asd' })}>Upload</Button>
+                    </Grid>
+
+                    <Grid item xs={4}>
                         {active && typeof account === 'string' ? (
                             <Button variant="contained" className={classes.button_connect}
-                                    onClick={onClickDisconnect}>{formatAddress(account, 4)}</Button>
+                                onClick={onClickDisconnect}>{formatAddress(account, 4)}</Button>
                         ) : (
                             <Button variant="contained" className={classes.button_connect}
-                                    onClick={onClickConnect}>Connect Wallet</Button>
+                                onClick={onClickConnect}>Connect Wallet</Button>
                         )}
                     </Grid>
+
                     <Grid item xs={12}>
-                        <ETHBalance></ETHBalance>
-                    </Grid>
-                    <Grid item xs={12}>
-                        <ETHBalanceSWR></ETHBalanceSWR>
-                    </Grid>
-                    <Grid item xs={12}>
-                        {/* <ReadERC20 addressContract='0xb25cafd4b5FCBAE13Cb6d761dA4fdED3bA07008C'></ReadERC20> */}
-                    </Grid>
-                    <Grid item xs={12}>
-                        <NFTList addressContract='0x9A9f2CCfdE556A7E9Ff0848998Aa4a0CFD8863AE'></NFTList>
+                        <NFTList addressContract={config.ADDRESS_MARKETPLACE}></NFTList>
                     </Grid>
                 </Grid>
             </Container>

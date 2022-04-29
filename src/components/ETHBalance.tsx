@@ -20,10 +20,10 @@ const ETHBalance = () => {
         <div>
         {active ? (
             <p>
-                ETH in account: {ethBalance?.toFixed(3)} {chainId===31337? 'Test':' '} ETH
+                {ethBalance?.toFixed(3)} {chainId===31337? 'Test':' '} ETH
             </p>
         ) : (
-            <p>ETH in account:</p>
+            <p></p>
         )}
         </div>
     )
